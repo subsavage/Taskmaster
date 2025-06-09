@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 )
@@ -31,8 +32,36 @@ func showTasks() {
 	}
 }
 
+func saveTasks() error{
+	data, err := json.MarshalIndent(tasks, "", " ")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(dataFile, data, 0644)
+}
+
+func loadTasks() error {
+	file, err := os.ReadFile(dataFile)
+	if err != nil{
+		if os.IsNotExist(err) {
+			tasks = []Task{}
+			return nil
+		}
+		return err
+	}
+	return json.Unmarshal(file, &tasks)
+}
+
+const dataFile = "tasks.json"
 
 func main() {
+	err := loadTasks()
+
+	if err != nil{
+		fmt.Println("Failed to load tasks: ", err)
+		return
+	}
+
 	args := os.Args
 
 	if len(args)<2 {
@@ -48,6 +77,12 @@ func main() {
 		}
 		title := args[2]
 		addTask(title)
+		err := saveTasks()
+		
+		if err != nil {
+			fmt.Println("Failed to save task: ", err)
+		}
+
 		fmt.Println("Task added to the list")
 		showTasks()
 
@@ -56,7 +91,7 @@ func main() {
 		showTasks()
 	
 	case "help":
-		fmt.Println("HelpBook\n To add a task, run : go run main.go add <your task>\n")
+		fmt.Println("HelpBook\n----------------------\nTo add a task, run : go run main.go add <your task>\nTo show all the tasks, run : go run main.go add list\n----------------------")
 
 	default:
 		fmt.Println("Command not recognised, run the following command for help\n ")
