@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 
@@ -52,6 +53,17 @@ func loadTasks() error {
 	return json.Unmarshal(file, &tasks)
 }
 
+func markDone(id int) {
+	for i, task := range tasks {
+		if task.ID == id {
+			tasks[i].Status = true
+			fmt.Printf("Status of Task %d updated successfully", id)
+			return
+		}
+	}
+	fmt.Println("Task ID not found, use the list command to see all the tasks")
+}
+
 const dataFile = "tasks.json"
 
 func main() {
@@ -85,6 +97,24 @@ func main() {
 
 		fmt.Println("Task added to the list")
 		showTasks()
+
+	case "done":
+		if len(args) < 3 {
+			fmt.Println("Please provide the task ID")
+			return
+		}
+
+		id, err := strconv.Atoi(args[2])
+		if err != nil {
+			fmt.Println("Invalid ID")
+			return
+		}
+
+		markDone(id)
+		err = saveTasks()
+		if err != nil {
+			fmt.Println("Failed to save tasks: ", err)
+		}
 
 
 	case "list":

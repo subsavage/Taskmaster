@@ -2,6 +2,16 @@
  {
   "ID": 1,
   "Title": "Write code",
+  "Status": true
+ },
+ {
+  "ID": 2,
+  "Title": "Apply to Jobs",
+  "Status": false
+ },
+ {
+  "ID": 3,
+  "Title": "Research on freelance",
   "Status": false
  }
 ]
