@@ -64,6 +64,24 @@ func markDone(id int) {
 	fmt.Println("Task ID not found, use the list command to see all the tasks")
 }
 
+func deleteTask(id int) {
+	index := -1
+
+	for i, task := range tasks {
+		if task.ID == id{
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		fmt.Println("Task not found, use the list command to see the tasks")
+	}
+
+	tasks = append(tasks[:index], tasks[index+1:]...)
+	fmt.Printf("Deleted task #%d\n", id)
+}
+
 const dataFile = "tasks.json"
 
 func main() {
@@ -117,11 +135,30 @@ func main() {
 		}
 
 
+	case "delete":
+		if len(args) < 3 {
+			fmt.Println("Please provide the task ID")
+			return
+		}
+
+		id,err := strconv.Atoi(args[2])
+		if err != nil {
+			fmt.Println("Invalid ID")
+			return
+		}
+
+		deleteTask(id)
+		err = saveTasks()
+
+		if err!= nil {
+			fmt.Println("Failed to save task: ", err)
+		}
+
 	case "list":
 		showTasks()
 	
 	case "help":
-		fmt.Println("HelpBook\n----------------------\nTo add a task, run : go run main.go add <your task>\nTo show all the tasks, run : go run main.go add list\n----------------------")
+		fmt.Println("HelpBook\n----------------------\nTo add a task, run : go run main.go add <your task>\nTo show all the tasks, run : go run main.go add list\nTo update the status of the task, run : go run main.go done <task number>\nTo delete a task, run : go run main.go delete <task number>\n----------------------")
 
 	default:
 		fmt.Println("Command not recognised, run the following command for help\n ")
