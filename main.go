@@ -84,8 +84,19 @@ func deleteTask(id int) {
         tasks[i].ID = i + 1
     }
 
-	
+
 	fmt.Printf("Deleted task #%d\n", id)
+}
+
+func editTask(id int, newTitle string) {
+	for i := range tasks {
+		if tasks[i].ID == id{
+			tasks[i].Title = newTitle
+			fmt.Printf("Task #%d updated successfully", id)
+			return
+		}
+	}
+	fmt.Println("Task ID not found.")
 }
 
 const dataFile = "tasks.json"
@@ -159,6 +170,29 @@ func main() {
 		if err!= nil {
 			fmt.Println("Failed to save task: ", err)
 		}
+
+	case "edit":
+		if len(args) < 4 {
+			fmt.Println("Usage: edit <task ID> <new title>")
+			return
+		}
+
+		id, err := strconv.Atoi(args[2])
+		
+		if err != nil {
+			fmt.Println("Invalid ID")
+			return
+		}
+
+		newTitle := args[3]
+		editTask(id, newTitle)
+
+		err = saveTasks()
+
+		if err != nil {
+			fmt.Println("Failed to save tasks:", err)
+    	}
+
 
 	case "list":
 		showTasks()
