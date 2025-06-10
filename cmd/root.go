@@ -14,21 +14,18 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "github.com/subsavage/taskmaster",
+	Use:   "taskmaster",
 	Short: "A simple CLI task manager",
 	Long: `HelpBook
 ----------------------
-To add a task, run:            go run main.go add <your task>
-To show all tasks, run:        go run main.go list
-To update a task's status:     go run main.go done <task number>
-To delete a task, run:         go run main.go delete <task number>
-To edit a task, run:           go run main.go edit <task number> <your new message>
-To show pending tasks, run:    go run main.go list pending
-To show completed tasks, run:  go run main.go list done
+To add a task, run:            taskmaster add <your task>
+To show all tasks, run:        taskmaster list
+To update a task's status:     taskmaster done <task number>
+To delete a task, run:         taskmaster delete <task number>
+To edit a task, run:           taskmaster edit <task number> <your new message>
+To show pending tasks, run:    taskmaster list pending
+To show completed tasks, run:  taskmaster list done
 ----------------------`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
