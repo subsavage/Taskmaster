@@ -8,7 +8,7 @@
 
 <h2>🛠️ Installation Steps:</h2>
 
-<p>1. Make sure you have go installed in your system</p>
+<p>1. Make sure you have Go installed in your system</p>
 
 <p>2. Run this in you terminal</p>
 
