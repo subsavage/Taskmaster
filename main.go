@@ -79,6 +79,12 @@ func deleteTask(id int) {
 	}
 
 	tasks = append(tasks[:index], tasks[index+1:]...)
+
+	for i := range tasks {
+        tasks[i].ID = i + 1
+    }
+
+	
 	fmt.Printf("Deleted task #%d\n", id)
 }
 
