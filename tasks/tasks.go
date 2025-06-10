@@ -1,4 +1,4 @@
-package main
+package tasks
 
 import (
 	"fmt"
@@ -11,16 +11,16 @@ type Task struct {
 	Status bool
 }
 
-var tasks []Task
+var taskList []Task
 
-func addTask(title string) {
-	id := len(tasks) + 1
+func AddTask(title string) {
+	id := len(taskList) + 1
 	task := Task{ID: id, Title: title, Status: false}
-	tasks = append(tasks, task)
+	taskList = append(taskList, task)
 }
 
-func showTasks(filter ...string) {
-	for _, task := range tasks {
+func ShowTasks(filter ...string) {
+	for _, task := range taskList {
 		match := true
 		if len(filter) > 0 {
 			switch filter[0] {
@@ -48,10 +48,10 @@ func showTasks(filter ...string) {
 	}
 }
 
-func markDone(id int) {
-	for i, task := range tasks {
+func MarkDone(id int) {
+	for i, task := range taskList {
 		if task.ID == id {
-			tasks[i].Status = true
+			taskList[i].Status = true
 			fmt.Printf("Status of Task %d updated successfully\n", id)
 			return
 		}
@@ -59,9 +59,9 @@ func markDone(id int) {
 	fmt.Println("Task ID not found.")
 }
 
-func deleteTask(id int) {
+func DeleteTask(id int) {
 	index := -1
-	for i, task := range tasks {
+	for i, task := range taskList {
 		if task.ID == id {
 			index = i
 			break
@@ -71,17 +71,17 @@ func deleteTask(id int) {
 		fmt.Println("Task not found.")
 		return
 	}
-	tasks = append(tasks[:index], tasks[index+1:]...)
-	for i := range tasks {
-		tasks[i].ID = i + 1
+	taskList = append(taskList[:index], taskList[index+1:]...)
+	for i := range taskList {
+		taskList[i].ID = i + 1
 	}
 	fmt.Printf("Deleted task #%d\n", id)
 }
 
-func editTask(id int, newTitle string) {
-	for i := range tasks {
-		if tasks[i].ID == id {
-			tasks[i].Title = newTitle
+func EditTask(id int, newTitle string) {
+	for i := range taskList {
+		if taskList[i].ID == id {
+			taskList[i].Title = newTitle
 			fmt.Printf("Task #%d updated successfully\n", id)
 			return
 		}

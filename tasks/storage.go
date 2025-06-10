@@ -1,4 +1,4 @@
-package main
+package tasks
 
 import (
 	"encoding/json"
@@ -7,22 +7,22 @@ import (
 
 const dataFile = "tasks.json"
 
-func saveTasks() error {
-	data, err := json.MarshalIndent(tasks, "", " ")
+func SaveTasks() error {
+	data, err := json.MarshalIndent(taskList, "", "  ")
 	if err != nil {
 		return err
 	}
 	return os.WriteFile(dataFile, data, 0644)
 }
 
-func loadTasks() error {
+func LoadTasks() error {
 	file, err := os.ReadFile(dataFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			tasks = []Task{}
+			taskList = []Task{}
 			return nil
 		}
 		return err
 	}
-	return json.Unmarshal(file, &tasks)
+	return json.Unmarshal(file, &taskList)
 }
