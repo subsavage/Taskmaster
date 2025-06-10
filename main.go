@@ -24,20 +24,38 @@ func addTask(title string){
 	tasks = append(tasks, task)
 }
 
-func showTasks() {
-	for _,task := range tasks {
-		var state string
-		var titleColored string
-		if task.Status{
-			state = color.HiGreenString("✅")
-			titleColored = color.New(color.FgHiBlack).Sprint(task.Title)
-		}else {
-			state = color.HiRedString("❌")
-			titleColored = color.New(color.FgHiWhite).Sprint(task.Title)
+func showTasks(filter ...string) {
+	for _, task := range tasks {
+		match := true
+
+		if len(filter) > 0 {
+			switch filter[0] {
+			case "done":
+				match = task.Status
+			case "pending":
+				match = !task.Status
+			default:
+				match = true
+			}
 		}
-		fmt.Printf("[%d] %s - %s\n", task.ID, state, titleColored)
+
+		if match {
+			var state string
+			var titleColored string
+
+			if task.Status {
+				state = color.HiGreenString("✅")
+				titleColored = color.New(color.FgHiBlack).Sprint(task.Title)
+			} else {
+				state = color.HiRedString("❌")
+				titleColored = color.New(color.FgHiWhite).Sprint(task.Title)
+			}
+
+			fmt.Printf("[%d] %s - %s\n", task.ID, state, titleColored)
+		}
 	}
 }
+
 
 func saveTasks() error{
 	data, err := json.MarshalIndent(tasks, "", " ")
@@ -201,10 +219,15 @@ func main() {
 
 
 	case "list":
+	if len(args) == 3 && (args[2] == "done" || args[2] == "pending") {
+		showTasks(args[2])
+	} else {
 		showTasks()
+	}
+
 	
 	case "help":
-		fmt.Println("HelpBook\n----------------------\nTo add a task, run : go run main.go add <your task>\nTo show all the tasks, run : go run main.go add list\nTo update the status of the task, run : go run main.go done <task number>\nTo delete a task, run : go run main.go delete <task number>\n----------------------")
+		fmt.Println("HelpBook\n----------------------\nTo add a task, run : go run main.go add <your task>\nTo show all the tasks, run : go run main.go add list\nTo update the status of the task, run : go run main.go done <task number>\nTo delete a task, run : go run main.go delete <task number>\nTo edit a task, run : go run main.go edit <task number> <your new message>\nTo show pending tasks, run : go run main.go list pending\nTo show completed tasks, run : go run main.go list done\n----------------------")
 
 	default:
 		fmt.Println("Command not recognised, run the following command for help\n ")
