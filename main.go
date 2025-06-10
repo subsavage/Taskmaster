@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"github.com/fatih/color"
 )
 
 
@@ -25,11 +26,16 @@ func addTask(title string){
 
 func showTasks() {
 	for _,task := range tasks {
-		state := "❌"
+		var state string
+		var titleColored string
 		if task.Status{
-			state = "✅"
+			state = color.HiGreenString("✅")
+			titleColored = color.New(color.FgHiBlack).Sprint(task.Title)
+		}else {
+			state = color.HiRedString("❌")
+			titleColored = color.New(color.FgHiWhite).Sprint(task.Title)
 		}
-		fmt.Printf("[%d] %s - %s\n", task.ID, state, task.Title)
+		fmt.Printf("[%d] %s - %s\n", task.ID, state, titleColored)
 	}
 }
 
