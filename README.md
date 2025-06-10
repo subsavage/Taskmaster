@@ -15,3 +15,9 @@
 ```
 go install github.com/subsavage/taskmaster@latest
 ```
+
+<h2>📱 Screenshots</h2>
+
+| <img src="https://github.com/user-attachments/assets/7d7328e3-7a93-4889-9aca-944d560271be" width="400"/> | <img src="https://github.com/user-attachments/assets/b8e921e6-1ca7-4cf6-9c80-694624789027" width="400"/> |
+| <img src="https://github.com/user-attachments/assets/8ef4ee14-808f-409d-ae95-7ea48b721ac6" width="400"/> | <img src="https://github.com/user-attachments/assets/af0bc09a-d9a0-41bd-af84-f605e359343e" width="400"/> |
+
