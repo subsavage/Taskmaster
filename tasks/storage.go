@@ -20,7 +20,7 @@ func LoadTasks() error {
 	if err != nil {
 		if os.IsNotExist(err) {
 			taskList = []Task{}
-			return nil
+			return SaveTasks() 
 		}
 		return err
 	}
