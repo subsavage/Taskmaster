@@ -15,13 +15,17 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "github.com/subsavage/taskmaster",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "A simple CLI task manager",
+	Long: `HelpBook
+----------------------
+To add a task, run:            go run main.go add <your task>
+To show all tasks, run:        go run main.go list
+To update a task's status:     go run main.go done <task number>
+To delete a task, run:         go run main.go delete <task number>
+To edit a task, run:           go run main.go edit <task number> <your new message>
+To show pending tasks, run:    go run main.go list pending
+To show completed tasks, run:  go run main.go list done
+----------------------`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
